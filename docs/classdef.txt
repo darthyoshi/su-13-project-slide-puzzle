@@ -1,0 +1,79 @@
+class Board {
+    private PuzzleTile[][] tiles;
+    private int[] freeIndex;
+    private int dimension;
+
+    /**
+     * Class constructor.
+     * @param dimen the dimensions of the puzzle
+     */
+    Board(int dimen);
+
+    /**
+     * Retrieves the location of the currently free tile.
+     * @return an array containing the indeces of the free tile
+     */
+    int[] getFreeTileIndex();
+
+    /**
+     * Initializes the puzzle.
+     */
+    void setBoard();
+
+    /**
+     * Moves the designated tile.
+     * @param src the tile to move
+     * @return true if the move is valid
+     */
+    Boolean moveTile(PuzzleTile src);
+
+    /**
+     * Retrieves the state of the puzzle.
+     * @return true if all tiles are correctly ordered
+     */
+    Boolean isComplete();
+
+    /**
+     * Retrieves a specific tile.
+     * @param index the location of the tile
+     * @return the designated PuzzleTile
+     */
+    PuzzleTile getTile(int[] index);
+}
+
+class PuzzleTile {
+    private const int value;
+    private int region;
+    private const String[] regions = {
+        "upperRightCorner", "top", "upperLeftCorner",
+        "right", "none", "left",
+        "lowerRightCorner", "bottom","lowerLeftCorner"
+    };
+
+    /**
+     * Class constructor.
+     * @param val the value of the tile
+     * @param free whether the current tile is empty
+     * @param reg the region of board that the tile is in
+     */
+    PuzzleTile(int val, Boolean free, int reg);
+
+    /**
+     * Retrieves the value of the tile.
+     * @return the integer value
+     */
+    int getVal();
+
+    /**
+     * Sets the region of the board that the tile is in.
+     * @param type the region code
+     * @return the new region code
+     */
+    int setRegion(int type);
+
+    /**
+     * Retrieves the region of the board that the tile is in.
+     * @return the string describing the region
+     */
+    String getRegion();
+}
