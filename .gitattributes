@@ -1,2 +1,7 @@
 * text=auto !eol
+Kay/large_board.blend -text
+Kay/med_board.blend -text
+Kay/small_board.blend -text
+Kay/tile.blend -text
+Kay/xl_board.blend -text
 docs/classdef.txt -text
