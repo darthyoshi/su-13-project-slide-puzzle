@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Board : MonoBehaviour {
-    private PuzzleTile[,] tiles;
     public PuzzleTile puzzleTile;
+    private PuzzleTile[,] tiles;
     private int dim;
     private int[] freeIndex;
 
@@ -30,18 +30,23 @@ public class Board : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if(isComplete()) {
+        /*if(isComplete()) {
             Debug.Log("game complete");
-        }
+        }*/
     }
 
-    bool isComplete() {
+    /**
+     * Determines whether or not the puzzle is complete. The puzzle tiles must
+     * be in sequential order by value.
+     * @return true if the puzzle is complete
+     */
+    public bool isComplete() {
         bool status = true;
 
-        for(int i = 0, num = 1; i < dim; i++) {
-            for(int j = 0; j < dim; j++, num++) {
-                if(tiles[i,j] != null) {
-                    if(tiles[i,j].getValue() != num) {
+        for(int y = 0, num = 1; y < dim; y++) {
+            for(int x = 0; x < dim; x++, num++) {
+                if(tiles[x,y] != null) {
+                    if(tiles[x,y].getValue() != num) {
                         status = false;
                         break;
                     }
@@ -52,13 +57,15 @@ public class Board : MonoBehaviour {
         return status;
     }
 
+    /**
+     * Moves the designated tile.
+     * @param tile the tile to move
+     */
     public void moveTile(PuzzleTile tile) {
         string direction = tile.getDirection();
         int[] tileIndex = tile.getIndex();
 
         if(direction != "none") {
-            updateTileNeighbors(tileIndex);
-
             tiles[freeIndex[0],freeIndex[1]] = tile;
             tiles[tileIndex[0],tileIndex[1]] = null;
 
@@ -68,19 +75,19 @@ public class Board : MonoBehaviour {
 
             switch(direction) {
                 case "up":
-                    tile.gameObject.transform.Translate(0,-2,0);
+                    iTween.MoveBy(tile.gameObject,new Vector3(0,-2,0),0.25f);
                     tileIndex[1]--;
                     break;
                 case "left":
-                    tile.gameObject.transform.Translate(-2,0,0);
+                    iTween.MoveBy(tile.gameObject,new Vector3(-2,0,0),0.25f);
                     tileIndex[0]--;
                     break;
                 case "right":
-                    tile.gameObject.transform.Translate(2,0,0);
+                    iTween.MoveBy(tile.gameObject,new Vector3(2,0,0),0.25f);
                     tileIndex[0]++;
                     break;
                 case "down":
-                    tile.gameObject.transform.Translate(0,2,0);
+                    iTween.MoveBy(tile.gameObject,new Vector3(0,2,0),0.25f);
                     tileIndex[1]++;
                     break;
             }
@@ -89,7 +96,11 @@ public class Board : MonoBehaviour {
         }
     }
 
-    public void updateTileNeighbors(int[] index) {
+    /**
+     * Updates the directions that a group of tiles can move in.
+     * @param index the indeces of the center tile
+     */
+    private void updateTileNeighbors(int[] index) {
         for(int i = 0; i < dim; i++) {
             for(int j = 0; j < dim; j++) {
                 if(tiles[i,j] != null) {
@@ -123,41 +134,116 @@ public class Board : MonoBehaviour {
         }
     }
 
-    void initializeBoard() {
+    /**
+     * Initializes the tiles and assigns the tile values at random.
+     */
+    private void initializeBoard() {
         tiles = new PuzzleTile[dim,dim];
-        Vector3 pos;
-        List<int> list = new List<int>(dim*dim-1);
-        int i;
 
-        for(i = 1; i < dim*dim; i++) {
-            list.Add(i);
-        }
+        if(dim != 3) {
+            List<int> list = new List<int>(dim*dim-1);
+            int i;
 
-        for(int x = 0; x < dim; x++) {
+            for(i = 1; i < dim*dim; i++) {
+                list.Add(i);
+            }
+
             for(int y = 0; y < dim; y++) {
-                if(list.Count > 0) {
-                    i = Random.Range(0, list.Count);
+                for(int x = 0; x < dim; x++) {
+                    if(list.Count > 0) {
+                        if(dim == 3) i = 0; else
+                        i = Random.Range(0, list.Count);
 
-                    tiles[x,y] = (PuzzleTile)Instantiate(puzzleTile, gameObject.transform.localPosition, gameObject.transform.rotation);
-                    tiles[x,y].transform.parent = gameObject.transform;
+                        tiles[x,y] = createTile(x, y);
 
-                    pos = tiles[x,y].transform.localPosition;
-                    pos.x += (2f*(float)x - (float)dim+1f) / ((float)dim+1f);
-                    pos.y += (2f*(float)y - (float)dim+1f) / ((float)dim+1f);
-                    pos.z += 2.5f;
-                    tiles[x,y].transform.localPosition = pos;
+                        setTileValue(tiles[x,y], list[i]);
 
-                    tiles[x,y].setValue(list[i]);
-                    tiles[x,y].name = "tile_" + tiles[x,y].getValue();
-                    tiles[x,y].setIndex(new int[2] {x,y});
-                    tiles[x,y].renderer.material.color = new Color((float)list[i]/10f, 0.5f, 0.5f, 0f);
-                    tiles[x,y].setBoard(this);
-
-                    list.RemoveAt(i);
+                        list.RemoveAt(i);
+                    }
                 }
             }
         }
+        else {
+            initializeTutorial();
+        }
+
         freeIndex = new int[2] {dim-1,dim-1};
         updateTileNeighbors(freeIndex);
+    }
+
+    /**
+     * Resets the board. The current state of the board is discarded, and the
+     * tiles reinitialized.
+     */
+    public void resetBoard() {
+        for(int x = 0; x < dim; x++) {
+            for(int y = 0; y < dim; y++) {
+                if(tiles[x,y] != null) {
+                    Destroy(tiles[x,y].gameObject);
+                }
+            }
+        }
+        initializeBoard();
+    }
+
+    /**
+     * Initializes the tutorial board. Only three tiles are out of place.
+     */
+    private void initializeTutorial() {
+        for(int y = 0, i = 1; y < dim; y++) {
+            for(int x = 0, j; x < dim && i < 9; x++, i++) {
+                tiles[x,y] = createTile(x, y);
+
+                switch(i) {
+                    case 5:
+                        j = 8;
+                        break;
+                    case 6:
+                        j = 5;
+                        break;
+                    case 8:
+                        j = 6;
+                        break;
+                    default:
+                        j = i;
+                        break;
+                }
+
+                setTileValue(tiles[x,y], j);
+            }
+        }
+    }
+
+    /**
+     * Creates a new tile at the specified location.
+     * @param x the x index of the new tile
+     * @param y the y index of the new tile
+     * @return the new tile
+     */
+    private PuzzleTile createTile(int x, int y) {
+        PuzzleTile newTile = (PuzzleTile)Instantiate(puzzleTile, gameObject.transform.localPosition, gameObject.transform.rotation);
+        newTile.transform.parent = gameObject.transform;
+
+        Vector3 pos = newTile.transform.localPosition;
+        pos.x += (2f*(float)x - (float)dim+1f) / ((float)dim+1f);
+        pos.y += (2f*(float)y - (float)dim+1f) / ((float)dim+1f);
+        pos.z += 2.5f;
+        newTile.transform.localPosition = pos;
+
+        newTile.setIndex(new int[2] {x,y});
+        newTile.setBoard(this);
+
+        return newTile;
+    }
+
+    /**
+     * Initializes the settings of a tile.
+     * @param tile the tile to modify
+     * @param val the value of the tile
+     */
+    private void setTileValue(PuzzleTile tile, int val) {
+        tile.setValue(val);
+        tile.name = "tile_" + val;
+        tile.renderer.material.color = new Color((float)val/10f, 0.5f, 0.5f, 0f);
     }
 }

@@ -11,17 +11,12 @@ public class PuzzleTile : MonoBehaviour {
     private Board board;
     private int[] index;
 
-    // Use this for initialization
-    void Start () {
-
-    }
-
     // Update is called once per frame
     void Update () {
         if(Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 500)) {
+            if (Physics.Raycast(ray, out hit, 50)) {
                 if (hit.transform.tag == "Tile") {
                     selected = hit.transform.gameObject;
                     if(gameObject.name == selected.name && hit.transform.parent.gameObject.name == board.gameObject.name) {
@@ -52,7 +47,7 @@ public class PuzzleTile : MonoBehaviour {
     /**
      * Sets the direction that the tile can move towards.
      * @param dirCode the direction code
-     * @return the new direction
+     * @return the new direction as a string
      */
     public string setDirection(int dirCode) {
         free = dirCode;
@@ -61,21 +56,35 @@ public class PuzzleTile : MonoBehaviour {
 
     /**
      * Retrieves the direction that the tile can move towards.
-     * @return the direction
+     * @return the direction as a string
      */
     public string getDirection() {
         return directions[free];
     }
 
+    /**
+     * Retrieves the indeces of the tile.
+     * @return the indeces as an array
+     */
     public int[] getIndex() {
         return index;
     }
 
+    /**
+     * Sets the indeces of the tile.
+     * @param newIndex the new indeces of the tile as an array
+     * @return true if successful
+     */
     public bool setIndex(int[] newIndex) {
         index = newIndex;
         return index != null;
     }
 
+    /**
+     * Sets the board associated with the tile.
+     * @param newBoard the board
+     * @return true if successful
+     */
     public bool setBoard(Board newBoard) {
         board = newBoard;
         return board != null;
