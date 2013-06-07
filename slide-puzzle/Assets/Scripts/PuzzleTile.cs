@@ -7,25 +7,7 @@ public class PuzzleTile : MonoBehaviour {
     private static string[] directions = {
         "none", "up", "left", "right", "down"
     };
-    private GameObject selected;
-    private Board board;
     private int[] index;
-
-    // Update is called once per frame
-    void Update () {
-        if(Input.GetMouseButtonDown(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 50)) {
-                if (hit.transform.tag == "Tile") {
-                    selected = hit.transform.gameObject;
-                    if(gameObject.name == selected.name && hit.transform.parent.gameObject.name == board.gameObject.name) {
-                        board.moveTile(this);
-                    }
-                }
-            }
-        }
-    }
 
     /**
      * Sets the value of the tile.
@@ -33,7 +15,13 @@ public class PuzzleTile : MonoBehaviour {
      * @return the new value
      */
     public int setValue(int val) {
-        return (value = val);
+        value = val;
+
+        TextMesh label = (TextMesh)transform.Find("label").GetComponent(typeof(TextMesh));
+        label.renderer.material.color = Color.black;
+        label.text = val.ToString();
+
+        return value;
     }
 
     /**
@@ -78,15 +66,5 @@ public class PuzzleTile : MonoBehaviour {
     public bool setIndex(int[] newIndex) {
         index = newIndex;
         return index != null;
-    }
-
-    /**
-     * Sets the board associated with the tile.
-     * @param newBoard the board
-     * @return true if successful
-     */
-    public bool setBoard(Board newBoard) {
-        board = newBoard;
-        return board != null;
     }
 }

@@ -5,6 +5,7 @@ Kay/small_board.blend -text
 Kay/tile.blend -text
 Kay/xl_board.blend -text
 docs/classdef.txt -text
+docs/kchoi-class-diagrams.ncp -text
 slide-puzzle/Assets/Materials/Material.mat -text
 slide-puzzle/Assets/Prefabs/LargeBoard.prefab -text
 slide-puzzle/Assets/Prefabs/Materials/Woodgrain.mat -text
@@ -21,7 +22,7 @@ slide-puzzle/Assets/Prefabs/Textures/Woodgrain2.jpg -text
 slide-puzzle/Assets/Prefabs/XLargeBoard.prefab -text
 slide-puzzle/Assets/Scenes/Main.unity -text
 slide-puzzle/Assets/Scripts/Board.cs -text
-slide-puzzle/Assets/Scripts/GUITest.cs -text
+slide-puzzle/Assets/Scripts/Main.cs -text
 slide-puzzle/Assets/Scripts/PuzzleTile.cs -text
 slide-puzzle/Assets/Standard[!!-~]Assets[!!-~](Mobile)/Control[!!-~]Setups/CameraRelativeSetup.unity -text
 slide-puzzle/Assets/Standard[!!-~]Assets[!!-~](Mobile)/Control[!!-~]Setups/FirstPersonSetup.unity -text
@@ -215,6 +216,7 @@ slide-puzzle/Library/metadata/90/902873f1336b14507b2ae690b68ecc51 -text
 slide-puzzle/Library/metadata/92/92722830d4a3f49e5bf7e68441337edb -text
 slide-puzzle/Library/metadata/92/928de419e2587af40a59e2a7ffdc8892 -text
 slide-puzzle/Library/metadata/93/93074eff559734934be9005d139a9ad5 -text
+slide-puzzle/Library/metadata/93/93b34ea5a5fc40744a75d2010e187597 -text
 slide-puzzle/Library/metadata/95/959c3cfd78a5541d193a0c7fd0fdbf6d -text
 slide-puzzle/Library/metadata/96/96571475093fb4359b11d284aff148d9 -text
 slide-puzzle/Library/metadata/97/9732e64c49e904ff2a10fc7794607fcf -text

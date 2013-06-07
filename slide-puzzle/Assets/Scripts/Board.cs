@@ -33,6 +33,18 @@ public class Board : MonoBehaviour {
         /*if(isComplete()) {
             Debug.Log("game complete");
         }*/
+
+        if(Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 50)) {
+                if (hit.transform.tag == "Tile") {
+                    if(hit.transform.parent.gameObject.name == gameObject.name) {
+                        moveTile((PuzzleTile)hit.transform.gameObject.GetComponent(typeof(PuzzleTile)));
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -61,7 +73,7 @@ public class Board : MonoBehaviour {
      * Moves the designated tile.
      * @param tile the tile to move
      */
-    public void moveTile(PuzzleTile tile) {
+    private void moveTile(PuzzleTile tile) {
         string direction = tile.getDirection();
         int[] tileIndex = tile.getIndex();
 
@@ -231,7 +243,6 @@ public class Board : MonoBehaviour {
         newTile.transform.localPosition = pos;
 
         newTile.setIndex(new int[2] {x,y});
-        newTile.setBoard(this);
 
         return newTile;
     }
@@ -242,8 +253,7 @@ public class Board : MonoBehaviour {
      * @param val the value of the tile
      */
     private void setTileValue(PuzzleTile tile, int val) {
-        tile.setValue(val);
         tile.name = "tile_" + val;
-        tile.renderer.material.color = new Color((float)val/10f, 0.5f, 0.5f, 0f);
+        tile.setValue(val);
     }
 }

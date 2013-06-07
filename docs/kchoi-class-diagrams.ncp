@@ -1,0 +1,79 @@
+<Project>
+  <Name>slide puzzle</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Board class diagram</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Board</Name>
+        <Access>Public</Access>
+        <Location left="96" top="37" />
+        <Size width="304" height="281" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private PuzzleTile[,] tiles</Member>
+        <Member type="Field">private int dim</Member>
+        <Member type="Field">private int[] freeIndex</Member>
+        <Member type="Field">public PuzzleTile puzzleTile</Member>
+        <Member type="Method">private PuzzleTile createTile(int x, int y)</Member>
+        <Member type="Method">private void initializeBoard()</Member>
+        <Member type="Method">private void initializeTutorial()</Member>
+        <Member type="Method">private void moveTile(PuzzleTile tile)</Member>
+        <Member type="Method">private void updateTileNeighbors(int[] index)</Member>
+        <Member type="Method">private void setTileValue(PuzzleTile tile, int val)</Member>
+        <Member type="Method">public bool isComplete()</Member>
+        <Member type="Method">public void resetBoard()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PuzzleTile</Name>
+        <Access>Public</Access>
+        <Location left="532" top="37" />
+        <Size width="332" height="298" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private int value</Member>
+        <Member type="Field">private int free = 0</Member>
+        <Member type="Field">private static string[] directions = {"none","up","left","right","down"}</Member>
+        <Member type="Field">private int[] index</Member>
+        <Member type="Method">public string setDirection(int dirCode)</Member>
+        <Member type="Method">public string getDirection()</Member>
+        <Member type="Method">public bool setIndex(int[] newIndex)</Member>
+        <Member type="Method">public int[] getIndex()</Member>
+        <Member type="Method">public int setValue(int val)</Member>
+        <Member type="Method">public int getValue()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>TextMesh</Name>
+        <Access>Public</Access>
+        <Location left="620" top="426" />
+        <Size width="162" height="77" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="0" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>507</X>
+          <Y>177</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndRole>tiles</EndRole>
+        <EndMultiplicity>8,15,24,35</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="1" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndRole>label</EndRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

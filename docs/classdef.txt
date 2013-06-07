@@ -1,79 +1,105 @@
 class Board {
-    private PuzzleTile[][] tiles;
+    public PuzzleTile puzzleTile;
+    private PuzzleTile[,] tiles;
+    private int dim;
     private int[] freeIndex;
-    private int dimension;
 
     /**
-     * Class constructor.
-     * @param dimen the dimensions of the puzzle
+     * Determines whether or not the puzzle is complete. The puzzle tiles must
+     * be in sequential order by value.
+     * @return true if the puzzle is complete
      */
-    Board(int dimen);
-
-    /**
-     * Retrieves the location of the currently free tile.
-     * @return an array containing the indeces of the free tile
-     */
-    int[] getFreeTileIndex();
-
-    /**
-     * Initializes the puzzle.
-     */
-    void setBoard();
+    public bool isComplete();
 
     /**
      * Moves the designated tile.
-     * @param src the tile to move
-     * @return true if the move is valid
+     * @param tile the tile to move
      */
-    Boolean moveTile(PuzzleTile src);
+    private void moveTile(PuzzleTile tile);
 
     /**
-     * Retrieves the state of the puzzle.
-     * @return true if all tiles are correctly ordered
+     * Updates the directions that a group of tiles can move in.
+     * @param index the indeces of the center tile
      */
-    Boolean isComplete();
+    private void updateTileNeighbors(int[] index);
 
     /**
-     * Retrieves a specific tile.
-     * @param index the location of the tile
-     * @return the designated PuzzleTile
+     * Initializes the tiles and assigns the tile values at random.
      */
-    PuzzleTile getTile(int[] index);
+    private void initializeBoard();
+
+    /**
+     * Resets the board. The current state of the board is discarded, and the
+     * tiles reinitialized.
+     */
+    public void resetBoard();
+
+    /**
+     * Initializes the tutorial board. Only three tiles are out of place.
+     */
+    private void initializeTutorial();
+
+    /**
+     * Creates a new tile at the specified location.
+     * @param x the x index of the new tile
+     * @param y the y index of the new tile
+     * @return the new tile
+     */
+    private PuzzleTile createTile(int x, int y);
+
+    /**
+     * Initializes the settings of a tile.
+     * @param tile the tile to modify
+     * @param val the value of the tile
+     */
+    private void setTileValue(PuzzleTile tile, int val);
 }
 
+
 class PuzzleTile {
-    private const int value;
-    private int region;
-    private const String[] regions = {
-        "upperRightCorner", "top", "upperLeftCorner",
-        "right", "none", "left",
-        "lowerRightCorner", "bottom","lowerLeftCorner"
+    private int value;
+    private int free = 0;
+    private static string[] directions = {
+        "none", "up", "left", "right", "down"
     };
+    private int[] index;
 
     /**
-     * Class constructor.
-     * @param val the value of the tile
-     * @param free whether the current tile is empty
-     * @param reg the region of board that the tile is in
+     * Sets the value of the tile.
+     * @param val the new value
+     * @return the new value
      */
-    PuzzleTile(int val, Boolean free, int reg);
+    public int setValue(int val);
 
     /**
      * Retrieves the value of the tile.
      * @return the integer value
      */
-    int getVal();
+    public int getValue();
 
     /**
-     * Sets the region of the board that the tile is in.
-     * @param type the region code
-     * @return the new region code
+     * Sets the direction that the tile can move towards.
+     * @param dirCode the direction code
+     * @return the new direction as a string
      */
-    int setRegion(int type);
+    public string setDirection(int dirCode);
 
     /**
-     * Retrieves the region of the board that the tile is in.
-     * @return the string describing the region
+     * Retrieves the direction that the tile can move towards.
+     * @return the direction as a string
      */
-    String getRegion();
+    public string getDirection();
+
+    /**
+     * Retrieves the indeces of the tile.
+     * @return the indeces as an array
+     */
+    public int[] getIndex();
+
+    /**
+     * Sets the indeces of the tile.
+     * @param newIndex the new indeces of the tile as an array
+     * @return true if successful
+     */
+    public bool setIndex(int[] newIndex);
 }
