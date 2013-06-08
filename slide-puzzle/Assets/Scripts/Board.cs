@@ -30,10 +30,6 @@ public class Board : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        /*if(isComplete()) {
-            Debug.Log("game complete");
-        }*/
-
         if(Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -53,20 +49,17 @@ public class Board : MonoBehaviour {
      * @return true if the puzzle is complete
      */
     public bool isComplete() {
-        bool status = true;
-
         for(int y = 0, num = 1; y < dim; y++) {
             for(int x = 0; x < dim; x++, num++) {
                 if(tiles[x,y] != null) {
                     if(tiles[x,y].getValue() != num) {
-                        status = false;
-                        break;
+                        return false;
                     }
                 }
             }
         }
 
-        return status;
+        return true;
     }
 
     /**
