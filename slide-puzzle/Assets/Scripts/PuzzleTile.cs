@@ -1,12 +1,12 @@
+/**
+ * @author Kay Choi
+ */
 using UnityEngine;
 using System.Collections;
 
 public class PuzzleTile : MonoBehaviour {
     private int value;
     private int free = 0;
-    private static string[] directions = {
-        "none", "up", "left", "right", "down"
-    };
     private int[] index;
 
     /**
@@ -33,21 +33,26 @@ public class PuzzleTile : MonoBehaviour {
     }
 
     /**
-     * Sets the direction that the tile can move towards.
+     * Sets the direction that the tile can move towards. The codes are as follows:
+     * 0 = none
+     * 1 = up
+     * 2 = left
+     * 3 = right
+     * 4 = down
      * @param dirCode the direction code
-     * @return the new direction as a string
+     * @return the new direction code
      */
-    public string setDirection(int dirCode) {
+    public int setDirection(int dirCode) {
         free = dirCode;
-        return directions[dirCode];
+        return free;
     }
 
     /**
      * Retrieves the direction that the tile can move towards.
-     * @return the direction as a string
+     * @return the direction code
      */
-    public string getDirection() {
-        return directions[free];
+    public int getDirection() {
+        return free;
     }
 
     /**

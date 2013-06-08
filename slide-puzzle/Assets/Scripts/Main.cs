@@ -1,15 +1,18 @@
+/**
+ * @author Kay Choi
+ */
+
 using UnityEngine;
 using System.Collections;
 
 public class Main : MonoBehaviour {
-    private bool start = false, menu = false, complete = false, tutorial = false;
-    private int toolbarInt = 1;
+    private bool isStarted = false, isMenuActive = false, isGameComplete = false, isTutorial = false;
+    private int toolbarInt = 1, min = 0, sec = 0, tutPgNo = 0;
     private Board board;
     private BoxCollider camScreen;
     private string[] toolbarStrings = {"Easy", "Normal", "Hard"};
     private string[] boardSize = {"Medium", "Large", "XLarge"};
     private float timer = 0f;
-    private int min = 0, sec = 0;
     public Texture2D logo;
 
     void Start() {
@@ -17,30 +20,30 @@ public class Main : MonoBehaviour {
     }
 
     void Update() {
-        if(start && !menu) {
+        if(isStarted && !isMenuActive) {
             timer += Time.deltaTime;
             min = (int)timer/60;
             sec = (int)timer%60;
 
-            complete = camScreen.enabled = board.isComplete();
+            isGameComplete = camScreen.enabled = board.isComplete();
         }
     }
 
     void OnGUI () {
-        if(!start && !tutorial) {
+        if(!isStarted && !isTutorial) {
             drawTitleScreen();
         }
 
-        else if(menu) {
+        //pause screen
+        else if(isMenuActive) {
             GUI.Box(new Rect(Screen.width/2-50, 20, 100, 20), "Paused");
 
-            //pause menu
             GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-90,200,180));
 
             GUI.Box(new Rect(0,0,200,180), "");
 
             if(GUI.Button(new Rect(20,20,160,30), "Resume")) {
-                menu = camScreen.enabled = false;
+                isMenuActive = camScreen.enabled = false;
             }
 
             drawPauseMenu();
@@ -48,14 +51,20 @@ public class Main : MonoBehaviour {
             GUI.EndGroup();
         }
 
-        else if(tutorial && complete) {
-        }
-
-        else if(tutorial) {
+        else if(isTutorial) {
             drawHud("Tutorial");
+            /* tutorial outline
+             * - introduce slide mechanic
+             *   - free tile
+             *   - highlight neighbor tiles
+             *   - highlight tile and move
+             * - introduce win condition
+             *   - complete puzzle
+             * - return to title screen
+             */
         }
 
-        else if(complete) {
+        else if(isGameComplete) {
             GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-75,200,180));
 
             GUI.Box(new Rect(0,0,200,180), "Completion time: "+min.ToString("00")+":"+sec.ToString("00"));
@@ -74,7 +83,7 @@ public class Main : MonoBehaviour {
         GUI.Box(new Rect(Screen.width/2-50, 20, 100, 20), stat);
 
         if(GUI.Button(new Rect(10,10,75,20), "Pause")) {
-            menu = camScreen.enabled = true;
+            isMenuActive = camScreen.enabled = true;
         }
     }
 
@@ -84,9 +93,8 @@ public class Main : MonoBehaviour {
         GUI.Box(new Rect(0,0,640,480), "Title");
 
         if(GUI.Button(new Rect(245, 300, 150, 30), "Tutorial")) {
-        //    iTween.MoveBy(gameObject, new Vector3(0,-20,0), 0.25f);
-            tutorial = true;
-            camScreen.enabled = false;
+            isTutorial = true;
+            iTween.RotateTo(gameObject, new Vector3(0,0,0), 0.25f);
 
             board = (Board)GameObject.Find("/SmallBoard").GetComponent(typeof(Board));
         }
@@ -95,9 +103,8 @@ public class Main : MonoBehaviour {
         GUI.BeginGroup(new Rect(195,360,250,110));
 
         if(GUI.Button(new Rect(50, 75, 150, 30), "Start Game")) {
-            //iTween.MoveBy(gameObject, new Vector3(0,-20,0), 0.25f);
             iTween.RotateTo(gameObject, new Vector3(0,-90*(toolbarInt+1),0), 0.25f);
-            start = true;
+            isStarted = true;
             camScreen.enabled = false;
 
             board = (Board)GameObject.Find("/"+boardSize[toolbarInt]+"Board").GetComponent(typeof(Board));
@@ -113,15 +120,36 @@ public class Main : MonoBehaviour {
 
     void drawPauseMenu() {
         if(GUI.Button(new Rect(20,75,160,30), "Restart")) {
-            board.resetBoard();
-            timer = 0f;
+            drawConfirmBox("restart");
         }
 
         if(GUI.Button(new Rect(20,130,160,30), "Quit")) {
+            drawConfirmBox("quit");
+        }
+    }
+
+    void drawConfirmBox(string type) {
+        GUI.BeginGroup(new Rect(25,22,150,135));
+
+        GUI.Box(new Rect(0,0,150,135), "Do you really wish to "+type+"?");
+
+        if(GUI.Button(new Rect(10,50,130,30), "Yes")) {
+            isMenuActive = isGameComplete = false;
             board.resetBoard();
-        //    iTween.MoveBy(gameObject, new Vector3(0,20,0), 0.25f);
-            start = tutorial = menu = complete = false;
-            camScreen.enabled = true;
+
+            if(type == "restart") {
+                camScreen.enabled = false;
+                timer = 0f;
+            }
+
+            else {
+                camScreen.enabled = true;
+                isStarted = isTutorial = false;
+            }
+        }
+
+        if(GUI.Button(new Rect(10,90,130,30), "No")) {
+            isMenuActive = false;
         }
     }
 }

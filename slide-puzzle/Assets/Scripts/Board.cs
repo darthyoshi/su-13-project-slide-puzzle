@@ -1,3 +1,6 @@
+/**
+ * @author Kay Choi
+ */
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,10 +70,10 @@ public class Board : MonoBehaviour {
      * @param tile the tile to move
      */
     private void moveTile(PuzzleTile tile) {
-        string direction = tile.getDirection();
+        int direction = tile.getDirection();
         int[] tileIndex = tile.getIndex();
 
-        if(direction != "none") {
+        if(direction != 0) {
             tiles[freeIndex[0],freeIndex[1]] = tile;
             tiles[tileIndex[0],tileIndex[1]] = null;
 
@@ -79,19 +82,19 @@ public class Board : MonoBehaviour {
             updateTileNeighbors(freeIndex);
 
             switch(direction) {
-                case "up":
+                case 1:
                     iTween.MoveBy(tile.gameObject,new Vector3(0,-2,0),0.25f);
                     tileIndex[1]--;
                     break;
-                case "left":
+                case 2:
                     iTween.MoveBy(tile.gameObject,new Vector3(-2,0,0),0.25f);
                     tileIndex[0]--;
                     break;
-                case "right":
+                case 3:
                     iTween.MoveBy(tile.gameObject,new Vector3(2,0,0),0.25f);
                     tileIndex[0]++;
                     break;
-                case "down":
+                case 4:
                     iTween.MoveBy(tile.gameObject,new Vector3(0,2,0),0.25f);
                     tileIndex[1]++;
                     break;
@@ -156,7 +159,6 @@ public class Board : MonoBehaviour {
             for(int y = 0; y < dim; y++) {
                 for(int x = 0; x < dim; x++) {
                     if(list.Count > 0) {
-                        if(dim == 3) i = 0; else
                         i = Random.Range(0, list.Count);
 
                         tiles[x,y] = createTile(x, y);
@@ -168,6 +170,7 @@ public class Board : MonoBehaviour {
                 }
             }
         }
+
         else {
             initializeTutorial();
         }
