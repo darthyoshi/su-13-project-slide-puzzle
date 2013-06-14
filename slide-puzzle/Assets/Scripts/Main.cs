@@ -4,14 +4,22 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour {
     private bool isStarted = false, isMenuActive = false, isGameComplete = false, isTutorial = false;
-    private int toolbarInt = 1, min = 0, sec = 0, tutPgNo = 0;
+    private int toolbarInt = 1, min = 0, sec = 0, tutPgNo = 0, confType = -1;
     private Board board;
     private BoxCollider camScreen;
     private string[] toolbarStrings = {"Easy", "Normal", "Hard"};
     private string[] boardSize = {"Medium", "Large", "XLarge"};
+    private string[] tutorialTitles = {"one","two","three","four"};
+    private string[] tutorialPages = {
+        "tutorial page one",
+        "tutorial page two",
+        "tutorial page three",
+        "tutorial page four"
+    };
     private float timer = 0f;
     public Texture2D logo;
 
@@ -20,7 +28,7 @@ public class Main : MonoBehaviour {
     }
 
     void Update() {
-        if(isStarted && !isMenuActive) {
+        if(isStarted && !isMenuActive && !isGameComplete) {
             timer += Time.deltaTime;
             min = (int)timer/60;
             sec = (int)timer%60;
@@ -38,38 +46,28 @@ public class Main : MonoBehaviour {
         else if(isMenuActive) {
             GUI.Box(new Rect(Screen.width/2-50, 20, 100, 20), "Paused");
 
-            GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-90,200,180));
-
-            GUI.Box(new Rect(0,0,200,180), "");
-
-            if(GUI.Button(new Rect(20,20,160,30), "Resume")) {
-                isMenuActive = camScreen.enabled = false;
-            }
-
             drawPauseMenu();
-
-            GUI.EndGroup();
         }
 
         else if(isTutorial) {
-            drawHud("Tutorial");
-            /* tutorial outline
-             * - introduce slide mechanic
-             *   - free tile
-             *   - highlight neighbor tiles
-             *   - highlight tile and move
-             * - introduce win condition
-             *   - complete puzzle
-             * - return to title screen
-             */
+            drawTutorial();
         }
 
         else if(isGameComplete) {
-            GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-75,200,180));
+            GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-90,200,180));
 
             GUI.Box(new Rect(0,0,200,180), "Completion time: "+min.ToString("00")+":"+sec.ToString("00"));
 
-            drawPauseMenu();
+            //display completion message
+
+            //display score options
+
+            if(GUI.Button(new Rect(20,130,160,30), "Quit")) {
+                camScreen.enabled = true;
+                isGameComplete = isStarted = isTutorial = false;
+                toolbarInt = 1;
+                timer = 0f;
+            }
 
             GUI.EndGroup();
         }
@@ -94,8 +92,7 @@ public class Main : MonoBehaviour {
 
         if(GUI.Button(new Rect(245, 300, 150, 30), "Tutorial")) {
             isTutorial = true;
-            iTween.RotateTo(gameObject, new Vector3(0,0,0), 0.25f);
-
+            toolbarInt = -1;
             board = (Board)GameObject.Find("/SmallBoard").GetComponent(typeof(Board));
         }
 
@@ -103,7 +100,6 @@ public class Main : MonoBehaviour {
         GUI.BeginGroup(new Rect(195,360,250,110));
 
         if(GUI.Button(new Rect(50, 75, 150, 30), "Start Game")) {
-            iTween.RotateTo(gameObject, new Vector3(0,-90*(toolbarInt+1),0), 0.25f);
             isStarted = true;
             camScreen.enabled = false;
 
@@ -111,6 +107,9 @@ public class Main : MonoBehaviour {
         }
 
         GUI.Label(new Rect(75,0,100,20), "Select Difficulty");
+
+        iTween.RotateTo(gameObject, new Vector3(0,-90*(toolbarInt+1),0), 0.5f);
+
         toolbarInt = GUI.Toolbar(new Rect(0, 30, 250, 30), toolbarInt, toolbarStrings);
 
         GUI.EndGroup();
@@ -119,23 +118,44 @@ public class Main : MonoBehaviour {
     }
 
     void drawPauseMenu() {
-        if(GUI.Button(new Rect(20,75,160,30), "Restart")) {
-            drawConfirmBox("restart");
-        }
+        switch(confType) {
+            case 0:
+                drawConfirmBox("restart");
+                break;
+            case 1:
+                drawConfirmBox("quit");
+                break;
+            default:
+                GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-90,200,180));
 
-        if(GUI.Button(new Rect(20,130,160,30), "Quit")) {
-            drawConfirmBox("quit");
+                GUI.Box(new Rect(0,0,200,180), "");
+
+                if(GUI.Button(new Rect(20,20,160,30), "Resume")) {
+                    isMenuActive = camScreen.enabled = false;
+                }
+
+                if(GUI.Button(new Rect(20,75,160,30), "Restart")) {
+                    confType = 0;
+                }
+
+                if(GUI.Button(new Rect(20,130,160,30), "Quit")) {
+                    confType = 1;
+                }
+
+                GUI.EndGroup();
+                break;
         }
     }
 
     void drawConfirmBox(string type) {
-        GUI.BeginGroup(new Rect(25,22,150,135));
+        GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-60,200,120));
 
-        GUI.Box(new Rect(0,0,150,135), "Do you really wish to "+type+"?");
+        GUI.Box(new Rect(0,0,200,120), "Do you really wish to "+type+"?");
 
-        if(GUI.Button(new Rect(10,50,130,30), "Yes")) {
+        if(GUI.Button(new Rect(10,35,180,30), "Yes")) {
             isMenuActive = isGameComplete = false;
             board.resetBoard();
+            confType = -1;
 
             if(type == "restart") {
                 camScreen.enabled = false;
@@ -145,11 +165,46 @@ public class Main : MonoBehaviour {
             else {
                 camScreen.enabled = true;
                 isStarted = isTutorial = false;
+                toolbarInt = 1;
             }
         }
 
-        if(GUI.Button(new Rect(10,90,130,30), "No")) {
+        if(GUI.Button(new Rect(10,80,180,30), "No")) {
             isMenuActive = false;
+            confType = -1;
         }
+
+        GUI.EndGroup();
+    }
+
+    void drawTutorial() {
+            /* tutorial outline
+             * - introduce slide mechanic
+             *   - free tile
+             *   - highlight neighbor tiles
+             *   - highlight tile and move
+             * - introduce win condition
+             *   - complete puzzle
+             * - return to title screen
+             */
+        Dictionary<string, PuzzleTile> dict = board.getFreeTiles();
+
+        GUI.BeginGroup(new Rect(Screen.width/2-200,20,400,200));
+
+        GUI.Box(new Rect(0,0,400,200), tutorialTitles[tutPgNo]);
+
+        GUI.Label(new Rect(10,20,380,140), tutorialPages[tutPgNo]);
+
+        if(GUI.Button(new Rect(290,170,100,20),"Continue")) {
+            tutPgNo++;
+        }
+
+        if(GUI.Button(new Rect(10,170,100,20),"Exit Tutorial") || tutPgNo == tutorialTitles.Length) {
+            tutPgNo = 0;
+            isTutorial = false;
+            toolbarInt = 1;
+        }
+
+        GUI.EndGroup();
     }
 }

@@ -252,4 +252,31 @@ public class Board : MonoBehaviour {
         tile.name = "tile_" + val;
         tile.setValue(val);
     }
+
+    /**
+     * Retrieves the tiles that can be moved. The tiles are associated with
+     * the cardinal directions in relation to the free slot.
+     * @return a Dictionary mapping PuzzleTiles to strings
+     */
+    public Dictionary<string, PuzzleTile> getFreeTiles() {
+        Dictionary <string, PuzzleTile> dict = new Dictionary<string, PuzzleTile>(4);
+
+        if(freeIndex[1] > 0) {
+            dict.Add("north", tiles[freeIndex[0],freeIndex[1]-1]);
+        }
+
+        if(freeIndex[1] < dim-1) {
+            dict.Add("south", tiles[freeIndex[0],freeIndex[1]+1]);
+        }
+
+        if(freeIndex[0] > 0) {
+            dict.Add("west", tiles[freeIndex[0]-1,freeIndex[1]]);
+        }
+
+        if(freeIndex[0] < dim-1) {
+            dict.Add("east", tiles[freeIndex[0]+1,freeIndex[1]]);
+        }
+
+        return dict;
+    }
 }
