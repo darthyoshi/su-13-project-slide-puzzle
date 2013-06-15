@@ -1,0 +1,172 @@
+/* 
+    Document   : style1
+    Created on : Jun 12, 2013, 9:19:58 AM
+    Author     : yingkitng
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body {
+}
+
+a:link, a:visited {
+}
+
+a:hover, a:active {
+}
+
+h1 {
+}
+
+header {
+}
+header h1 {
+}
+
+header #picture + div {
+}
+
+
+header #picture {
+}
+header .tagline {
+}
+
+#share-app {
+    
+}
+#share-app ul {
+}
+
+#share-app p {
+}
+#share-app li {
+}
+
+/* ------------------------------------------ */
+
+/* =buttons
+--------------------------------------------- */
+.facebook-button:link, .facebook-button:visited {
+}
+
+.facebook-button span {
+}
+.facebook-button .speech-bubble {
+}
+
+.facebook-button .plus {
+}
+.facebook-button .apprequests {
+}
+.button:link, .button:visited {
+}
+/* ------------------------------------------ */
+
+/* =get started
+--------------------------------------------- */
+#get-started {
+}
+#get-started p {
+}
+#get-started p span {
+}
+/* ------------------------------------------ */
+
+/* =guides/samples spacing
+--------------------------------------------- */
+#guides h1,
+#samples h1 {
+}
+#guides, #samples {
+}
+#guides ul li,
+#samples .list {
+}
+#guides ul li p,
+#samples ul {
+}
+/* ------------------------------------------ */
+
+/* =guides
+--------------------------------------------- */
+#guides {
+}
+#guides ul li {
+}
+#guides ul li p {
+}
+
+#guides ul li a.icon {
+}
+
+#guides ul li a.websites {
+}
+
+#guides ul li a.mobile-apps {
+}
+#guides ul li a.apps-on-facebook {
+}
+
+#guides ul li a.heroku {
+}
+/* ------------------------------------------ */
+
+/* =samples
+--------------------------------------------- */
+#samples {
+}
+
+#samples h3 {
+}
+#samples ul {
+}
+#samples li {
+}
+#samples li a:link,
+#samples li a:visited {
+}
+#samples .list img {
+}
+#samples .inline ul {
+}
+#samples .inline li {
+}
+#samples .inline li.first-column {
+}
+#samples .inline li a:link,
+#samples .inline li a:visited {
+}
+/* ------------------------------------------ */
+
+/* =clearfix
+--------------------------------------------- */
+.clearfix:after {
+}
+.clearfix {
+    
+}
+
+/* ------------------------------------------ */
+
+/* iframe 
+--------------------------------------------- */
+iframe {
+    height: 100px;
+}
+
+/* ------------------------------------------ */
+
+/* questions
+--------------------------------------------- */
+.question {
+    margin: 0 auto;
+}
+
+.QA{
+    margin: 0 auto;
+}
