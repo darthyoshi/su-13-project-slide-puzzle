@@ -9,6 +9,10 @@ public class PuzzleTile : MonoBehaviour {
     private int free = 0;
     private int[] index;
 
+    public void Start() {
+        gameObject.renderer.material.color = new Color(.8f, .8f, .8f, 1);
+    }
+
     /**
      * Sets the value of the tile.
      * @param val the new value

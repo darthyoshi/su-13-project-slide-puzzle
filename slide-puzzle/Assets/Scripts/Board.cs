@@ -10,6 +10,7 @@ public class Board : MonoBehaviour {
     private PuzzleTile[,] tiles;
     private int dim;
     private int[] freeIndex;
+    private int moves;
 
     // Use this for initialization
     void Start () {
@@ -69,7 +70,7 @@ public class Board : MonoBehaviour {
      * Moves the designated tile.
      * @param tile the tile to move
      */
-    private void moveTile(PuzzleTile tile) {
+    public void moveTile(PuzzleTile tile) {
         int direction = tile.getDirection();
         int[] tileIndex = tile.getIndex();
 
@@ -101,6 +102,7 @@ public class Board : MonoBehaviour {
             }
 
             tile.setIndex(tileIndex);
+            moves++;
         }
     }
 
@@ -147,6 +149,7 @@ public class Board : MonoBehaviour {
      */
     private void initializeBoard() {
         tiles = new PuzzleTile[dim,dim];
+        moves = 0;
 
         if(dim != 3) {
             List<int> list = new List<int>(dim*dim-1);
@@ -278,5 +281,9 @@ public class Board : MonoBehaviour {
         }
 
         return dict;
+    }
+
+    public int getMoveCount() {
+        return moves;
     }
 }
