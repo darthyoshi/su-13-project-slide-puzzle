@@ -48,13 +48,10 @@ public class Main : MonoBehaviour {
             "order. This may be numerical order, as in this tutorial, or to form "+
             "an image.",
         "This tutorial is already mostly in order, with only the #5, #6, and #8 "+
-            "out of place. Once those tiles are in the proper order, the game will "+
-            "automatically end, and you will be given the option of sharing or "+
-            "recording your scores.",
-        "This tutorial is already mostly in order, with only the #5, #6, and #8 "+
-            "out of place. Once those tiles are in the proper order, the game will "+
-            "automatically end, and you will be given the option of sharing or "+
-            "recording your scores.",
+            "tiles out of place.",
+        "Once those tiles are in the proper order, the game will automatically "+
+            "end, and you will be given the option of sharing or recording your "+
+            "scores.",
         "And that's the end of the tutorial. Have fun!"
     };
     private float timer = 0f;
@@ -91,16 +88,17 @@ public class Main : MonoBehaviour {
         }
 
         else if(isGameComplete) {
-            GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-90,200,180));
+            GUI.BeginGroup(new Rect(Screen.width/2-100,Screen.height/2-95,200,190));
 
-            GUI.Box(new Rect(0,0,200,180), "\n\n\nCompletion time: "+min.ToString("00")+":"+sec.ToString("00")+
-                "\n\nMoves made: "+board.getMoveCount());
+            GUI.Box(new Rect(0,0,200,190), "\nCongratulations!\n\nCompletion time: "+
+                min.ToString("00")+":"+sec.ToString("00")+"\nMoves made: "+
+                board.getMoveCount());
 
-            //display completion message
+            if(GUI.Button(new Rect(20,100,160,30), "Save Scores")) {
+                //calls to server, Facebook, etc
+            }
 
-            //display score options
-
-            if(GUI.Button(new Rect(20,130,160,30), "Quit")) {
+            if(GUI.Button(new Rect(20,140,160,30), "Quit")) {
                 camScreen.enabled = true;
                 isGameComplete = isStarted = isTutorial = false;
                 toolbarInt = 1;
@@ -259,11 +257,12 @@ public class Main : MonoBehaviour {
                     timer = Time.time;
                 }
 
-                else if(Time.time >= timer+0.3f && dict.ContainsKey("east") && dict["east"].getValue() == 5) {
+                else if(Time.time >= timer+.25f && dict.ContainsKey("east") && dict["east"].getValue() == 5) {
                     board.moveTile(dict["east"]);
+                    timer = Time.time;
                 }
 
-                else if(Time.time >= timer+.6f && dict.ContainsKey("south") && dict["south"].getValue() == 6) {
+                else if(Time.time >= timer+.5f && dict.ContainsKey("south") && dict["south"].getValue() == 6) {
                     board.moveTile(dict["south"]);
                 }
                 break;

@@ -6,7 +6,7 @@ using System.Collections;
 
 public class PuzzleTile : MonoBehaviour {
     private int value;
-    private int free = 0;
+    private int freeDir = 0;
     private int[] index;
 
     public void Start() {
@@ -47,8 +47,8 @@ public class PuzzleTile : MonoBehaviour {
      * @return the new direction code
      */
     public int setDirection(int dirCode) {
-        free = dirCode;
-        return free;
+        freeDir = dirCode;
+        return freeDir;
     }
 
     /**
@@ -56,7 +56,7 @@ public class PuzzleTile : MonoBehaviour {
      * @return the direction code
      */
     public int getDirection() {
-        return free;
+        return freeDir;
     }
 
     /**
