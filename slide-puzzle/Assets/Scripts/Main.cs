@@ -125,7 +125,7 @@ public class Main : MonoBehaviour {
     private void drawTitleScreen() {
         GUI.BeginGroup(new Rect(Screen.width/2-320,Screen.height/2-240,640,480));
 
-        GUI.Box(new Rect(0,0,640,480), "Title");
+        GUI.Box(new Rect(0,0,640,480), "SlidePuzzle");
 
         if(GUI.Button(new Rect(245, 300, 150, 30), "Tutorial")) {
             isTutorial = true;
