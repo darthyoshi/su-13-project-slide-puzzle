@@ -17,7 +17,7 @@ Platform assembly: C:\Users\Darth Yoshi\Documents\su13 project\repo\Executables\
 Loading C:\Users\Darth Yoshi\Documents\su13 project\repo\Executables\Windows\slidePuzzle_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Darth Yoshi\Documents\su13 project\repo\Executables\Windows\slidePuzzle_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
 Loading C:\Users\Darth Yoshi\Documents\su13 project\repo\Executables\Windows\slidePuzzle_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-- Completed reload, in  0.159 seconds
+- Completed reload, in  0.061 seconds
 desktop: 1440x900 60Hz; virtual: 1440x900 at 0,0
 <RI> Initializing input.
 

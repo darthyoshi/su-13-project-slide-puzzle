@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 93b34ea5a5fc40744a75d2010e187597
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - logo: {instanceID: 0}
+  - titleFont: {fileID: 12800000, guid: 2130909c0e942e6488ff7bb05b8be777, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

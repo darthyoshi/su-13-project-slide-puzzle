@@ -5,17 +5,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>slide-puzzle</string>
+	<string>SlidePuzzle</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Unity Player version 4.1.5f1 (ed5ea3281df6). (c) 2012 Unity Technologies ApS. All rights reserved.</string>
 	<key>CFBundleIconFile</key>
 	<string>UnityPlayer.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>unity.DefaultCompany.slide-puzzle</string>
+	<string>unity.DefaultCompany.SlidePuzzle</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>slide-puzzle</string>
+	<string>SlidePuzzle</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

@@ -40,7 +40,7 @@ Executables/Mac/slidePuzzle.app/Contents/Data/mainData -text
 Executables/Mac/slidePuzzle.app/Contents/Data/sharedassets0.assets -text
 Executables/Mac/slidePuzzle.app/Contents/Frameworks/MonoEmbedRuntime/osx/._libmono.0.dylib -text
 Executables/Mac/slidePuzzle.app/Contents/Frameworks/MonoEmbedRuntime/osx/libmono.0.dylib -text
-Executables/Mac/slidePuzzle.app/Contents/MacOS/slide-puzzle -text
+Executables/Mac/slidePuzzle.app/Contents/MacOS/SlidePuzzle -text
 Executables/Mac/slidePuzzle.app/Contents/Resources/._unity[!!-~]default[!!-~]resources -text
 Executables/Mac/slidePuzzle.app/Contents/Resources/Ageia.tif -text
 Executables/Mac/slidePuzzle.app/Contents/Resources/KeyConfig.nib/keyedobjects.nib -text

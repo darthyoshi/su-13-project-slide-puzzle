@@ -193,10 +193,10 @@ public class Main : MonoBehaviour {
             isMenuActive = isGameComplete = false;
             board.resetBoard();
             confType = -1;
+            timer = 0f;
 
             if(type == "restart") {
                 camScreen.enabled = false;
-                timer = 0f;
             }
 
             else {
