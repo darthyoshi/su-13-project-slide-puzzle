@@ -1,7 +1,7 @@
 * text=auto !eol
-Executables/SlidePuzzleLinux.zip -text
-Executables/SlidePuzzleMac.zip -text
-Executables/SlidePuzzleWindows.zip -text
+Executables/SlidePuzzle[!!-~]-[!!-~]Linux.zip -text
+Executables/SlidePuzzle[!!-~]-[!!-~]Mac.zip -text
+Executables/SlidePuzzle[!!-~]-[!!-~]Windows.zip -text
 Kay/large_board.blend -text
 Kay/med_board.blend -text
 Kay/small_board.blend -text
@@ -47,6 +47,8 @@ slide-puzzle/Assets/Prefabs/Models/xl_board.blend -text
 slide-puzzle/Assets/Prefabs/PuzzleTile.prefab -text
 slide-puzzle/Assets/Prefabs/SmallBoard.prefab -text
 slide-puzzle/Assets/Prefabs/XLargeBoard.prefab -text
+slide-puzzle/Assets/Resources/Images/logo.png -text
+slide-puzzle/Assets/Resources/Images/logo2.png -text
 slide-puzzle/Assets/Scenes/Main.unity -text
 slide-puzzle/Assets/Scripts/Board.cs -text
 slide-puzzle/Assets/Scripts/Main.cs -text

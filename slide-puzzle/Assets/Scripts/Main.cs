@@ -5,6 +5,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 public class Main : MonoBehaviour {
     private bool isStarted = false, isMenuActive = false, isGameComplete = false, isTutorial = false;
@@ -45,8 +47,8 @@ public class Main : MonoBehaviour {
         "The other score is the total time spent on the puzzle, which in normal "+
             "gameplay is tracked in the box currently labeled \"Tutorial\".",
         "To complete the puzzle, all the tiles must be rearranged in the proper "+
-            "order. This may be numerical order, as in this tutorial, or to form "+
-            "an image.",
+            "order."/* + " This may be numerical order, as in this tutorial, or to form "+
+            "an image."*/,
         "This tutorial is already mostly in order, with only the #5, #6, and #8 "+
             "tiles out of place.",
         "Once those tiles are in the proper order, the game will automatically "+
@@ -55,6 +57,7 @@ public class Main : MonoBehaviour {
         "And that's the end of the tutorial. Have fun!"
     };
     private float timer = 0f;
+
     public Texture2D logo;
 
     void Start() {
@@ -125,18 +128,19 @@ public class Main : MonoBehaviour {
     private void drawTitleScreen() {
         GUI.BeginGroup(new Rect(Screen.width/2-320,Screen.height/2-240,640,480));
 
-        GUI.Box(new Rect(0,0,640,480), "SlidePuzzle");
+        GUI.Box(new Rect(0,0,640,480), "");
+        GUI.DrawTexture(new Rect(120,-60,400,400), logo, ScaleMode.ScaleToFit);
 
-        if(GUI.Button(new Rect(245, 300, 150, 30), "Tutorial")) {
+        if(GUI.Button(new Rect(245, 240, 150, 30), "Tutorial")) {
             isTutorial = true;
             toolbarInt = -1;
             board = (Board)GameObject.Find("/SmallBoard").GetComponent(typeof(Board));
         }
 
         //start options
-        GUI.BeginGroup(new Rect(195,360,250,110));
+        GUI.BeginGroup(new Rect(195,300,250,150));
 
-        if(GUI.Button(new Rect(50, 75, 150, 30), "Start Game")) {
+        if(GUI.Button(new Rect(23, 100, 100, 30), "Start Game")) {
             isStarted = true;
             camScreen.enabled = false;
 
@@ -148,6 +152,10 @@ public class Main : MonoBehaviour {
         iTween.RotateTo(gameObject, new Vector3(0,-90*(toolbarInt+1),0), 0.5f);
 
         toolbarInt = GUI.Toolbar(new Rect(0, 30, 250, 30), toolbarInt, toolbarStrings);
+
+        if(GUI.Button(new Rect(127, 100, 100, 30), "Exit Game")) {
+            Application.Quit();
+        }
 
         GUI.EndGroup();
 
